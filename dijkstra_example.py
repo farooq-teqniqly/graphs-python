@@ -1,35 +1,8 @@
-import math
 import sys
 from heapq import heappush, heappop
 from typing import List
 
-
-class Vertex:
-    def __init__(self, key):
-        self.key = key
-        self.distance = math.inf
-        self.parent = None
-
-    def __lt__(self, other):
-        return self.distance < other.distance
-
-    def __gt__(self, other):
-        return self.distance > other.distance
-
-    def __str__(self) -> str:
-        parent = self.parent
-
-        if parent:
-            parent = parent.key
-
-        return str({"key": self.key, "parent": parent, "d": self.distance})
-
-
-class Edge:
-    def __init__(self, source: Vertex, target: Vertex, distance: int):
-        self.source = source
-        self.target = target
-        self.distance = distance
+from graph_primitives import Vertex, Edge
 
 
 class Dijkstra:
@@ -54,7 +27,7 @@ class Dijkstra:
                     v.parent = actual_vertex
                     heappush(heap, v)
 
-    def get_shortest_path(self, source: Vertex, target: Vertex) -> List[Vertex]:
+    def get_shortest_path(self, target: Vertex) -> List[Vertex]:
         path = [target]
         v = target.parent
 
@@ -93,7 +66,7 @@ def main():
 
     target = v_e
 
-    sp = d.get_shortest_path(source, target)
+    sp = d.get_shortest_path(target)
 
     print([str(v) for v in sp])
 
